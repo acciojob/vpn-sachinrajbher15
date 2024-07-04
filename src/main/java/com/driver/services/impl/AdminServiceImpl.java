@@ -24,28 +24,35 @@ public class AdminServiceImpl implements AdminService {
 
     @Override
     public Admin register(String username, String password) {
-        Admin admin = new Admin();
+        Admin admin=new Admin();
         admin.setPassword(password);
         admin.setUsername(username);
+
         adminRepository1.save(admin);
         return admin;
     }
 
     @Override
     public Admin addServiceProvider(int adminId, String providerName) {
-        Admin admin = adminRepository1.findById(adminId).get();
+        Admin admin=adminRepository1.findById(adminId).get();
+
+        //creating a new service provider
         ServiceProvider serviceProvider=new ServiceProvider();
+        //setting attribute of serviceProvider
         serviceProvider.setAdmin(admin);
         serviceProvider.setName(providerName);
+
+        //setting attribute of admin
         admin.getServiceProviders().add(serviceProvider);
         adminRepository1.save(admin);
+
         return admin;
     }
 
     @Override
     public ServiceProvider addCountry(int serviceProviderId, String countryName) throws Exception{
-        if(countryName.equalsIgnoreCase("ind")||countryName.equalsIgnoreCase("aus")
-                ||countryName.equalsIgnoreCase("usa") ||
+
+        if(countryName.equalsIgnoreCase("ind")||countryName.equalsIgnoreCase("aus") ||countryName.equalsIgnoreCase("usa") ||
                 countryName.equalsIgnoreCase("chi") ||countryName.equalsIgnoreCase("jpn")){
 
             ServiceProvider serviceProvider=serviceProviderRepository1.findById(serviceProviderId).get();
@@ -73,12 +80,16 @@ public class AdminServiceImpl implements AdminService {
             }
 
             country.setServiceProvider(serviceProvider);
+
             serviceProvider.getCountryList().add(country);
+
             serviceProviderRepository1.save(serviceProvider);
+
             return serviceProvider;
         }
         else{
             throw new Exception("Country not found");
         }
     }
+
 }
