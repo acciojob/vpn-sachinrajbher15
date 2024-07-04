@@ -23,14 +23,14 @@ public class ConnectionServiceImpl implements ConnectionService {
     public User connect(int userId, String countryName) throws Exception{
         User user = userRepository2.findById(userId).get();
         if(user.getMaskedIp()!=null){
-            throw new Exception("Already Connected");
+            throw new Exception("Already connected");
         }
         else if(countryName.equalsIgnoreCase(user.getOriginalCountry().getCountryName().toString())){
             return user;
         }
         else{
             if(user.getServiceProviderList().size()==0){
-                throw new Exception("Unable to Conncet");
+                throw new Exception("Unable to connect");
             }
             List<ServiceProvider> serviceProviderList = user.getServiceProviderList();
             int a = Integer.MAX_VALUE;
@@ -51,7 +51,7 @@ public class ConnectionServiceImpl implements ConnectionService {
             }
 
             if(!flag){
-                throw new Exception("Unable to Connect");
+                throw new Exception("Unable to connect");
             }
             Connection connection = new Connection();
             connection.setUser(user);
@@ -114,7 +114,7 @@ public class ConnectionServiceImpl implements ConnectionService {
                 }
                 User user2=connect(senderId,countryName);
                 if(!user2.getConnected()){
-                    throw new Exception("Cannot establish communication");
+                    throw new Exception("Unable to connect");
                 }
                 else return user2;
             }
@@ -128,7 +128,7 @@ public class ConnectionServiceImpl implements ConnectionService {
             User user2=connect(senderId,countryName);
 
             if(!user2.getConnected()){
-                throw new Exception("Cannot establish communication");
+                throw new Exception("Unable to connect");
             }
             else return user2;
         }
