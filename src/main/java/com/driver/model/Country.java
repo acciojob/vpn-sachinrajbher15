@@ -31,4 +31,10 @@ public class Country{
     public void setId(int id){ this.id = id;}
     public void setCountryName(CountryName countryName){ this.countryName = countryName;}
     public void setCode(String code) { this.code = code;}
+
+    public void setUser(User user) { this.user = user;}
+    public User getUser(){ return user; }
+
+    public void setServiceProvider(ServiceProvider serviceProvider) { this.serviceProvider = serviceProvider; }
+    public ServiceProvider getServiceProvider() { return serviceProvider; }
 }
