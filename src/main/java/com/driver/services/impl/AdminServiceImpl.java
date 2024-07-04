@@ -52,12 +52,20 @@ public class AdminServiceImpl implements AdminService {
     @Override
     public ServiceProvider addCountry(int serviceProviderId, String countryName) throws Exception{
 
+        //add a country under the serviceProvider and return respective service provider
+        //country name would be a 3-character string out of ind, aus, usa, chi, jpn. Each character can be in uppercase or lowercase.
+        // You should create a new Country object based on the given country name and add it to the country list of the service provider.
+        // Note that the user attribute of the country in this case would be null.
+        //In case country name is not amongst the above mentioned strings, throw "Country not found" exception
+
         if(countryName.equalsIgnoreCase("ind")||countryName.equalsIgnoreCase("aus") ||countryName.equalsIgnoreCase("usa") ||
                 countryName.equalsIgnoreCase("chi") ||countryName.equalsIgnoreCase("jpn")){
 
             ServiceProvider serviceProvider=serviceProviderRepository1.findById(serviceProviderId).get();
 
             Country country=new Country();
+
+            //setting attributes of Country
             if(countryName.equalsIgnoreCase("IND")){
                 country.setCountryName(CountryName.IND);
                 country.setCode(CountryName.IND.toCode());
@@ -81,7 +89,9 @@ public class AdminServiceImpl implements AdminService {
 
             country.setServiceProvider(serviceProvider);
 
+            //adding country to listOfcountry of ServiceProvider
             serviceProvider.getCountryList().add(country);
+            //here user attribute of serviceProvider is null
 
             serviceProviderRepository1.save(serviceProvider);
 
@@ -90,6 +100,7 @@ public class AdminServiceImpl implements AdminService {
         else{
             throw new Exception("Country not found");
         }
+
     }
 
 }
