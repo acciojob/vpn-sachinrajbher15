@@ -1,9 +1,11 @@
 package com.driver.model;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
+@Table(name = "service_provider")
 public class ServiceProvider {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -16,18 +18,17 @@ public class ServiceProvider {
     Admin admin;
 
     @OneToMany(mappedBy = "serviceProvider", cascade = CascadeType.ALL)
-    List<Country> countryList;
+    List<Country> countryList = new ArrayList<>();
 
     @ManyToMany(mappedBy = "serviceProviderList", cascade = CascadeType.ALL)
-    List<User> users;
+    List<User> users = new ArrayList<>();
 
     @OneToMany(mappedBy = "serviceProvider", cascade = CascadeType.ALL)
-    List<Connection> connectionList;
+    List<Connection> connectionList = new ArrayList<>();
 
     public int getId() {
         return id;
     }
-
     public void setId(int id) {
         this.id = id;
     }
@@ -35,7 +36,6 @@ public class ServiceProvider {
     public String getName() {
         return name;
     }
-
     public void setName(String name) {
         this.name = name;
     }
@@ -43,7 +43,6 @@ public class ServiceProvider {
     public Admin getAdmin() {
         return admin;
     }
-
     public void setAdmin(Admin admin) {
         this.admin = admin;
     }
@@ -51,7 +50,6 @@ public class ServiceProvider {
     public List<Country> getCountryList() {
         return countryList;
     }
-
     public void setCountryList(List<Country> countryList) {
         this.countryList = countryList;
     }
@@ -59,7 +57,6 @@ public class ServiceProvider {
     public List<User> getUsers() {
         return users;
     }
-
     public void setUsers(List<User> users) {
         this.users = users;
     }
@@ -67,7 +64,6 @@ public class ServiceProvider {
     public List<Connection> getConnectionList() {
         return connectionList;
     }
-
     public void setConnectionList(List<Connection> connectionList) {
         this.connectionList = connectionList;
     }
