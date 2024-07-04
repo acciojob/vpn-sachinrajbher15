@@ -23,28 +23,28 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User register(String username, String password, String countryName) throws Exception{
-        User user = new User();
+
+        User user=new User();
         user.setUsername(username);
         user.setPassword(password);
 
-        Country country = new Country();
-        if(countryName.equals("IND")){
+        Country country=new Country();
+
+        if(countryName.equalsIgnoreCase("IND")){
             country.setCountryName(CountryName.IND);
             country.setCode(CountryName.IND.toCode());
         }
-        else if(countryName.equals("AUS")){
+        else if(countryName.equalsIgnoreCase("AUS")){
             country.setCountryName(CountryName.AUS);
             country.setCode(CountryName.AUS.toCode());
-        }
-        else if(countryName.equals("USA")){
+        } else if (countryName.equalsIgnoreCase("USA")) {
             country.setCountryName(CountryName.USA);
             country.setCode(CountryName.USA.toCode());
         }
-        else if(countryName.equals("CHI")){
+        else if(countryName.equalsIgnoreCase("CHI")){
             country.setCountryName(CountryName.CHI);
             country.setCode(CountryName.CHI.toCode());
-        }
-        else if(countryName.equals("JPN")){
+        } else if (countryName.equalsIgnoreCase("JPN")) {
             country.setCountryName(CountryName.JPN);
             country.setCode(CountryName.JPN.toCode());
         }
@@ -52,21 +52,26 @@ public class UserServiceImpl implements UserService {
             throw new Exception("Country not found");
         }
 
-        country.setUser(user);
+        country.setUser(user); //setting the foreign key of country
+
         user.setOriginalCountry(country);
         user.setConnected(false);
+
         String currentCode=country.getCode()+"."+userRepository3.save(user).getId();
         user.setOriginalIp(currentCode);
+
         userRepository3.save(user);
         return user;
     }
 
     @Override
     public User subscribe(Integer userId, Integer serviceProviderId) {
-        User user = userRepository3.findById(userId).get();
-        ServiceProvider serviceProvider = serviceProviderRepository3.findById(serviceProviderId).get();
+        User user=userRepository3.findById(userId).get();
+        ServiceProvider serviceProvider=serviceProviderRepository3.findById(serviceProviderId).get();
+
         user.getServiceProviderList().add(serviceProvider);
         serviceProvider.getUsers().add(user);
+
         userRepository3.save(user);
         return user;
     }
